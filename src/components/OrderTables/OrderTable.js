@@ -1,7 +1,8 @@
 import { Box, Typography } from "@mui/material";
 
 import { FixedSizeList as List } from "react-window";
-import { OrderBookContext } from "../../utils/OrderBookContext";
+import { OrderBookContext } from "../../contexts/OrderBookContext";
+import OrderTableRow from "./OrderTableRow";
 import { useContext } from "react";
 
 function OrderTable({ data, title, color }) {
@@ -33,31 +34,15 @@ function OrderTable({ data, title, color }) {
 						height={600}
 						width={400}
 					>
-						{({ data, index, style }) => {
-							const [price, amount] = data[index];
-
-							return (
-								<Box
-									key={`${price}-${amount}-${index}`}
-									style={style}
-									sx={{
-										display: "flex",
-										borderBottom: "1px solid",
-										borderColor: "$light",
-										justifyContent: "space-between",
-										alignItems: "center",
-										color,
-									}}
-								>
-									<Typography variant="body1">
-										{parseFloat(price).toFixed(decimal)}
-									</Typography>
-									<Typography variant="body1">
-										{parseFloat(price).toFixed(decimal)}
-									</Typography>
-								</Box>
-							);
-						}}
+						{({ data, index, style }) => (
+							<OrderTableRow
+								data={data}
+								index={index}
+								style={style}
+								decimal={decimal}
+								color={color}
+							/>
+						)}
 					</List>
 				</Box>
 			</Box>

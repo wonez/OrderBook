@@ -1,6 +1,6 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 
-import { OrderBookContext } from "../../../utils/OrderBookContext";
+import { OrderBookContext } from "../../../contexts/OrderBookContext";
 import { selectPair } from "../../../store/actions";
 import { useContext } from "react";
 

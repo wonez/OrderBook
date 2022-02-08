@@ -1,6 +1,6 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-import { OrderBookContext } from "../../../utils/OrderBookContext";
+import { OrderBookContext } from "../../../contexts/OrderBookContext";
 import { selectDecimal } from "../../../store/actions";
 import { useContext } from "react";
 

@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-import { OrderBookContext } from "../../utils/OrderBookContext";
+import { OrderBookContext } from "../../contexts/OrderBookContext";
 import Toolbar from "./Toolbar/Toolbar";
 import { useContext } from "react";
 

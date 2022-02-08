@@ -4,9 +4,10 @@ import { selectPair, setPairs } from "../store/actions";
 import { useCallback, useEffect, useReducer } from "react";
 
 import Header from "./Header/Header";
-import { OrderBookContext } from "../utils/OrderBookContext";
+import { OrderBookContext } from "../contexts/OrderBookContext";
 import OrderTables from "./OrderTables/OrderTables";
 import { ThemeProvider } from "@mui/material/styles";
+import { filterTradingPairs } from "../utils/helpers";
 import { theme } from "../utils/theme";
 import { usePairUrl } from "../hooks/usePairUrl";
 
@@ -16,14 +17,7 @@ function App() {
 	useEffect(() => {
 		fetch("https://api.binance.com/api/v3/exchangeInfo")
 			.then((response) => response.json())
-			.then((data) =>
-				data.symbols
-					.filter((item) => item.status === "TRADING")
-					.map(
-						({ baseAsset, quoteAsset }) =>
-							`${baseAsset} / ${quoteAsset}`
-					)
-			)
+			.then(filterTradingPairs)
 			.then((pairs) => dispatch(setPairs(pairs)));
 	}, []);
 
