@@ -1,15 +1,19 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-import { useState } from "react";
-
-const decimalsArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { OrderBookContext } from "../../../utils/OrderBookContext";
+import { selectDecimal } from "../../../store/actions";
+import { useContext } from "react";
 
 function DecimalsSelector() {
-	const [decimals, setDecimals] = useState(2);
+	const {
+		state: { decimal, decimals },
+		dispatch,
+	} = useContext(OrderBookContext);
 
-	const handleChange = (event) => {
-		setDecimals(event.target.value);
+	const handleChange = ({ target: { value } }) => {
+		dispatch(selectDecimal(value));
 	};
+
 	return (
 		<Box sx={{ width: 100, mx: 2 }}>
 			<FormControl fullWidth>
@@ -17,12 +21,16 @@ function DecimalsSelector() {
 				<Select
 					labelId="decimals-label"
 					id="decimals-select"
-					value={decimals}
+					value={decimal}
 					label="Decimals"
 					onChange={handleChange}
 				>
-					{decimalsArr.map((val) => {
-						return <MenuItem value={val}>{val}</MenuItem>;
+					{decimals.map((val) => {
+						return (
+							<MenuItem key={val} value={val}>
+								{val}
+							</MenuItem>
+						);
 					})}
 				</Select>
 			</FormControl>

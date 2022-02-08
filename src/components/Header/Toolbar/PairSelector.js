@@ -1,32 +1,31 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Autocomplete, Box, TextField } from "@mui/material";
 
-import { useState } from "react";
-
-const options = ["BTC / USDT", "BTC / EUR", "ETH / BTC"];
+import { OrderBookContext } from "../../../utils/OrderBookContext";
+import { selectPair } from "../../../store/actions";
+import { useContext } from "react";
 
 function PairSelector() {
-	const [pair, setPair] = useState("BTC / USDT");
+	const {
+		state: { pair, pairs },
+		dispatch,
+	} = useContext(OrderBookContext);
 
-	const handleChange = (event) => {
-		setPair(event.target.value);
+	const handleChange = (_, value) => {
+		dispatch(selectPair(value));
 	};
 
 	return (
 		<Box sx={{ width: 150 }}>
-			<FormControl fullWidth>
-				<InputLabel id="pair-label">Pair</InputLabel>
-				<Select
-					labelId="pair-label"
-					id="pair-select"
-					value={pair}
-					label="Pair"
-					onChange={handleChange}
-				>
-					{options.map((val) => {
-						return <MenuItem value={val}>{val}</MenuItem>;
-					})}
-				</Select>
-			</FormControl>
+			<Autocomplete
+				disablePortal
+				options={pairs}
+				autoHighlight
+				autoComplete
+				value={pair}
+				disableClearable
+				onChange={handleChange}
+				renderInput={(params) => <TextField {...params} label="Pair" />}
+			/>
 		</Box>
 	);
 }

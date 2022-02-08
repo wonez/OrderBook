@@ -1,8 +1,14 @@
 import { Box, Typography } from "@mui/material";
 
+import { OrderBookContext } from "../../utils/OrderBookContext";
 import Toolbar from "./Toolbar/Toolbar";
+import { useContext } from "react";
 
 function Header() {
+	const {
+		state: { pair },
+	} = useContext(OrderBookContext);
+
 	return (
 		<Box>
 			<Box
@@ -23,7 +29,7 @@ function Header() {
 						mx: 2,
 					}}
 				/>
-				<Typography variant="h5">BTC / USDT</Typography>
+				<Typography variant="h5">{pair}</Typography>
 			</Box>
 			<Toolbar />
 		</Box>

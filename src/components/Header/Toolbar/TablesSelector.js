@@ -1,15 +1,19 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-import { useState } from "react";
-
-const options = ["Buy", "Sell", "Buy & Sell"];
+import { OrderBookContext } from "../../../utils/OrderBookContext";
+import { selectTable } from "../../../store/actions";
+import { useContext } from "react";
 
 function TablesSelector() {
-	const [tables, setTables] = useState("Buy & Sell");
+	const {
+		state: { table, tables },
+		dispatch,
+	} = useContext(OrderBookContext);
 
-	const handleChange = (event) => {
-		setTables(event.target.value);
+	const handleChange = ({ target: { value } }) => {
+		dispatch(selectTable(value));
 	};
+
 	return (
 		<Box sx={{ width: 150 }}>
 			<FormControl fullWidth>
@@ -17,12 +21,16 @@ function TablesSelector() {
 				<Select
 					labelId="tables-label"
 					id="tables-select"
-					value={tables}
+					value={table}
 					label="Tables"
 					onChange={handleChange}
 				>
-					{options.map((val) => {
-						return <MenuItem value={val}>{val}</MenuItem>;
+					{tables.map((val) => {
+						return (
+							<MenuItem key={val} value={val}>
+								{val}
+							</MenuItem>
+						);
 					})}
 				</Select>
 			</FormControl>
